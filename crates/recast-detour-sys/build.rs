@@ -41,8 +41,9 @@ fn main() {
         let target = env::var("TARGET").unwrap();
         if target.contains("apple") {
             println!("cargo:rustc-link-lib=dylib=c++"); // CLang
-        } else {
-            println!("cargo:rustc-link-lib=dylib=stdc++"); // GCC
+        }
+        else if !target.contains("msvc") {
+            println!("cargo:rustc-link-lib=dylib=c++"); // GCC
         }
     }
 }
