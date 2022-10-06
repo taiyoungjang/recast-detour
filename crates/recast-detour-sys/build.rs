@@ -43,7 +43,7 @@ fn main() {
             println!("cargo:rustc-link-lib=dylib=c++"); // CLang
         }
         else if !target.contains("msvc") {
-            println!("cargo:rustc-link-lib=dylib=c++"); // GCC
+            println!("cargo:rustc-link-lib=dylib=stdc++"); // GCC
         }
     }
 }
