@@ -10,8 +10,8 @@ extern "C"
         uint32_t vert_count;           
         uint16_t *indices;              
         uint32_t triangles_count;
-        float bmin[3];                  ///< NavMesh minimum bounds in world unit
-        float bmax[3];                  ///< NavMesh maximum bounds in world unit
+        double bmin[3];                  ///< NavMesh minimum bounds in world unit
+        double bmax[3];                  ///< NavMesh maximum bounds in world unit
 
         float walkable_height;          ///< The agent height in world unit
         float walkable_radius;          ///< The agent radius in world unit
@@ -21,29 +21,29 @@ extern "C"
     } recastc_NavMesh;
 
     typedef struct {
-        float center[3];
-        float half_extents[3];
+        double center[3];
+        double half_extents[3];
     } recastc_NearestPolyInput;
 
     typedef struct {
-        float pos[3];
+        double pos[3];
         uint32_t poly;
     }  recastc_NearestPolyResult;
 
     typedef struct {
-        float pos[3];
+        double pos[3];
         uint32_t poly;
     } recastc_ClosestPointInput;
 
     typedef struct {
-        float pos[3];
+        double pos[3];
     } recastc_ClosestPointResult;
 
     typedef struct {
         uint32_t start_poly;
         uint32_t end_poly;        
-        float start_pos[3];
-        float end_pos[3];    
+        double start_pos[3];
+        double end_pos[3];
     } recastc_PathInput;
 
     typedef struct {

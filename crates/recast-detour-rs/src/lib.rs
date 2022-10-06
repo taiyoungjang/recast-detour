@@ -33,25 +33,25 @@ type Result<T> = std::result::Result<T, Error>;
 #[derive(Debug, Default, Clone)]
 pub struct NavMeshData {
     /// Vertices in world unit, length = 3 * Number of Vertices
-    pub vertices: Vec<f32>,
+    pub vertices: Vec<f64>,
     /// Indices,  length = 3 * Number of Triangles
     pub indices: Vec<u16>,
     /// Walkable height in nav mesh in World Unit
-    pub walkable_height: f32,
+    pub walkable_height: f64,
     /// Walkable Radius in nav mesh in World Unit
-    pub walkable_radius: f32,
+    pub walkable_radius: f64,
     /// Walkable climb height in World Unit
-    pub walkable_climb: f32,
+    pub walkable_climb: f64,
 
     /// Cell size in world unit
-    pub cell_size: f32,
+    pub cell_size: f64,
     /// Cell height in world unit
-    pub cell_height: f32,
+    pub cell_height: f64,
 }
 
-fn compute_bb(vertices: &[f32]) -> ([f32; 3], [f32; 3]) {
-    let mut bmin = [std::f32::MAX; 3];
-    let mut bmax = [std::f32::MIN; 3];
+fn compute_bb(vertices: &[f64]) -> ([f64; 3], [f64; 3]) {
+    let mut bmin = [f64::MAX; 3];
+    let mut bmax = [f64::MIN; 3];
     debug_assert!(vertices.len() % 3 == 0);
 
     for i in (0..vertices.len()).step_by(3) {
@@ -68,32 +68,32 @@ fn compute_bb(vertices: &[f32]) -> ([f32; 3], [f32; 3]) {
 }
 
 #[inline]
-fn world_unit_to_cell_unit(f: f32, bmin: f32, cs: f32) -> u16 {
+fn world_unit_to_cell_unit(f: f64, bmin: f64, cs: f64) -> u16 {
     let f = ((f - bmin) / cs).max(0.0);
     f.round() as u16
 }
 
 #[derive(Debug, Copy, Clone, Default)]
-pub struct Point([f32; 3]);
+pub struct Point([f64; 3]);
 
 impl Point {
-    pub fn new((x, y, z): (f32, f32, f32)) -> Point {
+    pub fn new((x, y, z): (f64, f64, f64)) -> Point {
         Point([x, y, z])
     }
 
-    pub fn x(&self) -> f32 {
+    pub fn x(&self) -> f64 {
         self.0[0]
     }
-    pub fn y(&self) -> f32 {
+    pub fn y(&self) -> f64 {
         self.0[1]
     }
-    pub fn z(&self) -> f32 {
+    pub fn z(&self) -> f64 {
         self.0[2]
     }
 }
 
-impl From<(f32, f32, f32)> for Point {
-    fn from(f: (f32, f32, f32)) -> Point {
+impl From<(f64, f64, f64)> for Point {
+    fn from(f: (f64, f64, f64)) -> Point {
         Point::new(f)
     }
 }
@@ -182,7 +182,7 @@ impl RecastQuery {
         Ok(RecastQuery { q })
     }
 
-    pub fn find_path(&self, start: Point, end: Point, r: f32) -> Result<Vec<Point>> {
+    pub fn find_path(&self, start: Point, end: Point, r: f64) -> Result<Vec<Point>> {
         let (start_p, start_poly) = self.find_poly(start, r)?;
         let (end_p, end_poly) = self.find_poly(end, r)?;
 
@@ -262,7 +262,7 @@ impl RecastQuery {
         }
     }
 
-    pub fn find_poly(&self, pos: Point, r: f32) -> Result<(Point, u32)> {
+    pub fn find_poly(&self, pos: Point, r: f64) -> Result<(Point, u32)> {
         let mut result = sys::RecastNearestPolyResult::default();
         let mut err = sys::RecastNavError::zeros();
 

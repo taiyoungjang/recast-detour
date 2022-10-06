@@ -4,7 +4,7 @@ use rand::SeedableRng;
 use recast_detour_rs::{NavMeshData, NavObjFile, Point, RecastQuery};
 use std::path::Path;
 
-fn get_point(i: u16, verts: &[f32]) -> Point {
+fn get_point(i: u16, verts: &[f64]) -> Point {
     let i = i as usize;
     Point::new((verts[i * 3 + 0], verts[i * 3 + 1], verts[i * 3 + 2]))
 }
@@ -32,7 +32,7 @@ fn center_point(data: &NavMeshData, i_tris: usize) -> Point {
     Point::new((x, y, z))
 }
 
-fn sign(p1: &Point, p2: &Point, p3: &Point) -> f32 {
+fn sign(p1: &Point, p2: &Point, p3: &Point) -> f64 {
     (p1.x() - p3.x()) * (p2.z() - p3.z()) - (p2.x() - p3.x()) * (p1.z() - p3.z())
 }
 

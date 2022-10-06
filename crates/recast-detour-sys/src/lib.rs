@@ -9,41 +9,41 @@ pub struct RecastNavMeshData {
     pub vert_count: u32,
     pub indices: *const u16,
     pub triangles_count: u32,
-    pub bmin: [f32; 3],
-    pub bmax: [f32; 3],
+    pub bmin: [f64; 3],
+    pub bmax: [f64; 3],
 
-    pub walkable_height: f32,
-    pub walkable_radius: f32,
-    pub walkable_climb: f32,
-    pub cell_size: f32,
-    pub cell_height: f32,
+    pub walkable_height: f64,
+    pub walkable_radius: f64,
+    pub walkable_climb: f64,
+    pub cell_size: f64,
+    pub cell_height: f64,
 }
 
 #[derive(Debug)]
 #[repr(C)]
 pub struct RecastNearestPolyInput {
-    pub center: [f32; 3],
-    pub half_extents: [f32; 3],
+    pub center: [f64; 3],
+    pub half_extents: [f64; 3],
 }
 
 #[derive(Default, Debug)]
 #[repr(C)]
 pub struct RecastNearestPolyResult {
-    pub pos: [f32; 3],
+    pub pos: [f64; 3],
     pub poly: u32,
 }
 
 #[derive(Debug)]
 #[repr(C)]
 pub struct RecastClosestPointInput {
-    pub pos: [f32; 3],
+    pub pos: [f64; 3],
     pub poly: u32,
 }
 
 #[derive(Default, Debug)]
 #[repr(C)]
 pub struct RecastClosestPointResult {
-    pub pos: [f32; 3],
+    pub pos: [f64; 3],
 }
 
 #[derive(Default, Debug)]
@@ -51,8 +51,8 @@ pub struct RecastClosestPointResult {
 pub struct RecastPathInput {
     pub start_poly: u32,
     pub end_poly: u32,
-    pub start_pos: [f32; 3],
-    pub end_pos: [f32; 3],
+    pub start_pos: [f64; 3],
+    pub end_pos: [f64; 3],
 }
 
 #[repr(C)]
@@ -162,18 +162,18 @@ mod tests {
 
         let cell_size = 0.1;
         let cell_height = 0.1;
-        let mut bmin = [std::f32::MAX; 3];
-        let mut bmax = [std::f32::MIN; 3];
+        let mut bmin = [f64::MAX; 3];
+        let mut bmax = [f64::MIN; 3];
 
         for &i in indices {
             let idx = i as usize * 3;
-            bmin[0] = ((verts[idx + 0] as f32) * cell_size).min(bmin[0]);
-            bmin[1] = ((verts[idx + 1] as f32) * cell_height).min(bmin[1]);
-            bmin[2] = ((verts[idx + 2] as f32) * cell_size).min(bmin[2]);
+            bmin[0] = ((verts[idx + 0] as f64) * cell_size).min(bmin[0]);
+            bmin[1] = ((verts[idx + 1] as f64) * cell_height).min(bmin[1]);
+            bmin[2] = ((verts[idx + 2] as f64) * cell_size).min(bmin[2]);
 
-            bmax[0] = ((verts[idx + 0] as f32) * cell_size).max(bmax[0]);
-            bmax[1] = ((verts[idx + 1] as f32) * cell_height).max(bmax[1]);
-            bmax[2] = ((verts[idx + 2] as f32) * cell_size).max(bmax[2]);
+            bmax[0] = ((verts[idx + 0] as f64) * cell_size).max(bmax[0]);
+            bmax[1] = ((verts[idx + 1] as f64) * cell_height).max(bmax[1]);
+            bmax[2] = ((verts[idx + 2] as f64) * cell_size).max(bmax[2]);
         }
 
         let data = RecastNavMeshData {

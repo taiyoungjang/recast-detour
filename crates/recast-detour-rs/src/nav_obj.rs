@@ -39,16 +39,16 @@ fn parse_data_line(obj_file: &mut NavObjFile, line: &String) -> Result<()> {
     let second_item = items.next().ok_or(Error::LineError)?.to_string();
 
     match first_item.as_ref() {
-        "walkable_height" => obj_file.data.walkable_height = second_item.parse::<f32>()?,
-        "walkable_radius" => obj_file.data.walkable_radius = second_item.parse::<f32>()?,
-        "walkable_climb" => obj_file.data.walkable_climb = second_item.parse::<f32>()?,
-        "cell_size" => obj_file.data.cell_size = second_item.parse::<f32>()?,
-        "cell_height" => obj_file.data.cell_height = second_item.parse::<f32>()?,
+        "walkable_height" => obj_file.data.walkable_height = second_item.parse::<f64>()?,
+        "walkable_radius" => obj_file.data.walkable_radius = second_item.parse::<f64>()?,
+        "walkable_climb" => obj_file.data.walkable_climb = second_item.parse::<f64>()?,
+        "cell_size" => obj_file.data.cell_size = second_item.parse::<f64>()?,
+        "cell_height" => obj_file.data.cell_height = second_item.parse::<f64>()?,
         "g" => obj_file.name = second_item,
         "v" => {
-            let f1 = second_item.parse::<f32>()?;
-            let f2 = items.next().ok_or(Error::LineError)?.parse::<f32>()?;
-            let f3 = items.next().ok_or(Error::LineError)?.parse::<f32>()?;
+            let f1 = second_item.parse::<f64>()?;
+            let f2 = items.next().ok_or(Error::LineError)?.parse::<f64>()?;
+            let f3 = items.next().ok_or(Error::LineError)?.parse::<f64>()?;
             obj_file.data.vertices.push(f1);
             obj_file.data.vertices.push(f2);
             obj_file.data.vertices.push(f3);
