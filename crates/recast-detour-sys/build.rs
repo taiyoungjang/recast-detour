@@ -4,6 +4,7 @@ fn main() {
         use std::fs;
         use std::io;
         use std::path::Path;
+        use std::env;
 
         fn print_path(path: &Path) {
             if let Some(path) = path.to_str() {
@@ -36,5 +37,12 @@ fn main() {
         println!("cargo:rustc-link-search=native={}/lib", dst.display());
         println!("cargo:rustc-link-lib=static=RecastC");
         println!("cargo:rustc-link-lib=static=Detour");
+        // C++ stdlib
+        let target = env::var("TARGET").unwrap();
+        if target.contains("apple") {
+            println!("cargo:rustc-link-lib=dylib=c++"); // CLang
+        } else {
+            println!("cargo:rustc-link-lib=dylib=stdc++"); // GCC
+        }
     }
 }
